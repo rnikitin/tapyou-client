@@ -1,57 +1,131 @@
-﻿._tapyou-wrapper {
+.tapyou-wrapper {
+    @import "bootstrap";
 
-    @import "bootstrap.less";
-
-    .splash {
-        text-align: center;
-        margin: 10% 0 0 0;
+    div {
+        background: none;
     }
 
-        .splash .message {
-            font-size: 5em;
-            line-height: 1.5em;
-            -webkit-text-shadow: rgba(0, 0, 0, 0.5) 0px 0px 15px;
-            text-shadow: rgba(0, 0, 0, 0.5) 0px 0px 15px;
-            text-transform: uppercase;
+    .tapyou-host {
+        position: fixed;
+        top: 100px;
+        right: -401px;
+        height: 600px;
+        width: 400px;
+        background-color: #f5f7fa;
+        border: 1px solid #1d315b;
+        border: 1px solid rgba(29,49,91,.3);
+        box-shadow: inset 0 1px #fff;
+        box-shadow: inset 0 1px rgba(255,255,255,.5);
+        border-right: 0;
+
+        &.on {
+            right: 0;
         }
 
-        .splash .icon-spinner {
-            text-align: center;
-            display: inline-block;
-            font-size: 5em;
-            margin-top: 50px;
+        .expander {
+            position: absolute;
+            left: -61px;
+            top: 72px;
+            transform: rotate(-90deg);
+            -webkit-transform: rotate(-90deg);
+            -moz-transform: rotate(-90deg);
+            -ms-transform: rotate(-90deg);
+            -o-transform: rotate(-90deg);
+            background-color: #f5f7fa;
+            padding: 5px 20px 5px 20px;
+            border: 1px solid #1d315b;
+            border: 1px solid rgba(29,49,91,.3);
+            box-shadow: inset 0 1px #fff;
+            box-shadow: inset 0 1px rgba(255,255,255,.5);
+            border-bottom: 0;
+            color: #333;
+            font-weight: bold;
+            width: 50px;
+            cursor: pointer;
         }
 
-    .page-host {
-        position: relative;
-        top: 40px;
-    }
+        .chat-host {
+            top: 10px;
+            position: absolute;
+            bottom: 50px;
+            left: 10px;
+            right: 10px;
 
-    .navbar-fixed-top .navbar-inner {
-        padding-left: 1em;
-        padding-right: 1em;
-    }
+            .chat-header {
+                white-space: nowrap;
+                font-weight: bold;
+                color: #999;
+            }
 
-    .navbar-fixed-top .icon-home {
-        font-size: 18px;
-    }
+            .users-list {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                position: absolute;
+                top: 30px;
+                left: 0;
+                right: 0;
+                border-top: 1px solid #1d315b;
+                border-top: 1px solid rgba(29,49,91,.3);
+                padding-top: 4px;
 
-    .loader {
-        margin: 6px 8px 4px 8px;
-        visibility: hidden;
-    }
+                li {
+                    display: inline-block;
+                    margin-right: 15px;
 
-        .loader.active {
-            visibility: visible;
+                    b.status {
+                        width: 10px;
+                        height: 10px;
+                        background: green;
+                        display: inline-block;
+                        border-radius: 50%;
+                        margin-right: 2px;
+                    }
+                }
+            }
+
+            .chat-messages {
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                top: 60px;
+                border-top: 1px solid #1d315b;
+                border-top: 1px solid rgba(29,49,91,.3);
+                overflow: auto;
+                padding-right: 5px;
+                padding-left: 10px;
+
+                .inner {
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+
+                    li {
+                        .time {
+                            color: #999;
+                        }
+
+                        .name {
+                            font-weight: bold;
+                        }
+                        .text {
+
+                        }
+                    }
+                }
+            }
         }
 
-    @media (max-width: 979px) {
-        .page-host {
-            top: 0;
-        }
+        .compose-message {
+            position: absolute;
+            bottom: 0;
+            left: 10px;
+            right: 10px;
 
-        .navbar-fixed-top {
-            margin-bottom: 0;
+            .input-append {
+                text-align: center;
+            }
         }
     }
 }

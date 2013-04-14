@@ -1,10 +1,7 @@
-﻿define(["require", "exports", 'durandal/app', 'tasks/models/events', 'tasks/backend/signalR'], function(require, exports, __app__, __E__, __signalR__) {
-    var app = __app__;
-
-    var E = __E__;
-
-    var signalR = __signalR__;
-
+﻿define(["require", "exports"], function(require, exports) {
+    
+    
+    
     var ctor = (function () {
         function ctor(element, options) {
             this.settings = {

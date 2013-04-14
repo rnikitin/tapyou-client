@@ -1,4 +1,6 @@
 requirejs.config({
+    //urlArgs: "bust=" + (new Date()).getTime(),
+
     paths: {
         "text": "durandal/amd/text",
         'jquery': 'libs/jquery-1.9.1',
@@ -18,7 +20,17 @@ requirejs.config({
     }
 });
 
-define(['durandal/app', 'durandal/viewLocator', 'durandal/system', 'jquery', 'bootstrap'], function (app, viewLocator, system, $) {
+define(['require',
+        'durandal/app',
+        'durandal/viewLocator',
+        'durandal/system',
+        'backend/sockets',
+        'jquery',
+        'ko',
+        'bootstrap',
+        'require',
+        'text'],
+    function (r, app, viewLocator, system, sockets, $) {
 
     //>>excludeStart("build", true);
     system.debug(true);
@@ -27,26 +39,29 @@ define(['durandal/app', 'durandal/viewLocator', 'durandal/system', 'jquery', 'bo
     // to avoid conflicts remove $ alias from window
     window.__tap$ = $.noConflict();
     
-    // load manually socket.io
-    $.getScript('http://localhost:31337/socket.io/socket.io.js', function () {
-    });
-
     app.start().then(function () {
         viewLocator.useConvention();
         app.adaptToDevice();
 
-        
-
+        //>>excludeStart("build", true);
+        // display all events in app
         app.on('all', function () {
             system.log(arguments);
         });
+        //>>excludeEnd("build");
+        
+        // init socket.io
+        setTimeout(function (){
+            //sockets.init();
+        }, 0);
+        
 
-        
-        
         // create DOM host for widget
-        var appRoot = $("<div class='_tapyou-wrapper'></div>").appendTo('body');
+        var appRoot = $("<div class='tapyou-wrapper'></div>").appendTo('body');
 
         app.setRoot('viewmodels/shell', null, appRoot[0]);
+        
+        
     });
 });
 

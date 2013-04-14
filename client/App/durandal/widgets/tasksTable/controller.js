@@ -1,7 +1,6 @@
-define(["require", "exports", 'durandal/widget'], function(require, exports, __widget__) {
+define(["require", "exports"], function(require, exports) {
     
-    var widget = __widget__;
-
+    
     var ctor = (function () {
         function ctor(element, settings) {
             this.settings = {

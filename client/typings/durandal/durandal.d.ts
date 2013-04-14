@@ -521,3 +521,51 @@ interface IEventSubscription
       */
      off(): void;
  }
+
+
+//////
+interface IDurandalApp {
+    /**
+      * Sets the title for the app. You must set this before calling start. This will set the document title and the default message box header. It is also used internally by the router to set the document title when pages change.
+      */
+    title: string;
+    /**
+      *  simple helper function that wraps a call to modalDialog.show()
+      */
+    showModal: (obj, activationData?, context?) => JQueryPromise;
+    /**
+      * A simple helper function that translates to return modalDialog.show(new MessageBox(message, title, options));
+      */
+    showMessage: (message: string, title?: string, options?: any) => JQueryPromise;
+    /**
+      * Call this function to bootstrap the Durandal framework. It returns a promise which is resolved when the framework is configured and the dom is ready. At that point you are ready to set your root.
+      */
+    start: () => JQueryPromise;
+    /**
+      * This sets the root view or view model and displays the composed application in the specified application host. 
+      * @param root parameter is required and can be anything that the composition module understands as a view or view model. This includes strings and objects. 
+      * @param transition If you have a splash screen, you may want to specify an optional transition to animate from the splash to your main shell. 
+      * @param applicationHost parameter is optional. If provided it should be an element id for the node into which the UI should be composed. If it is not provided the default is to look for an element with an id of "applicationHost".
+      */
+    setRoot: (root: any, transition?: string, applicationHost?: string) => void;
+    /**
+      * If you intend to run on mobile, you should also call app.adaptToDevice() before setting the root.
+      */
+    adaptToDevice: () => void;
+    /**
+      * The events parameter is a space delimited string containing one or more event identifiers. When one of these events is triggered, the callback is called and passed the event data provided by the trigger. The special events value of "all" binds all events on the object to the callback. If a context is provided, it will be bound to this for the callback. If the callback is omitted, then a promise-like object is returned from on. This object represents a subscription and has a then function used to register callbacks.
+      */
+    on: (events: string, callback: Function, context?) => IEventSubscription;
+    /**
+      * Unwires callbacks from events. If no context is specified, all callbacks with different contexts will be removed. If no callback is specified, all callbacks for the event will be removed. If no event is specified, all event callbacks on the object will be removed.
+      */
+    off: (events: string, callback: Function, context?) => any;
+    /**
+      * Triggers an event, or space-delimited list of events. Subsequent arguments to trigger will be passed along to the event callbacks.
+      */
+    trigger: (events: string, ...args: any[]) => any;
+    /**
+      * Provides a function which can be used as a callback to trigger the events. This is useful in combination with jQuery events which may need to trigger the aggregator's events.
+      */
+    proxy: (events) => Function;
+}

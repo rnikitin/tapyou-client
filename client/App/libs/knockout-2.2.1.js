@@ -3618,11 +3618,6 @@
                     ko.setTemplateEngine(jqueryTmplTemplateEngineInstance);
 
                 ko.exportSymbol('jqueryTmplTemplateEngine', ko.jqueryTmplTemplateEngine);
-                
-                // Expose Knockout as an AMD module
-                if (typeof define === "function" && define.amd) {
-                    define("ko", [], function () { return ko; });
-                }
             })();
         });
 
