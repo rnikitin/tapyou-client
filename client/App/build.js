@@ -20,11 +20,15 @@
         "jquery",
         "ko",
         'bootstrap',
-        
+        // modules
+        "backend/sockets",
+
         // viewmodels
         "viewmodels/shell",
+        "viewmodels/panel",
         //// views
-        "text!views/shell.html"
+        "text!views/shell.html",
+        "text!views/panel.html"
     ],
     
     out: "tapyou-latest.js",

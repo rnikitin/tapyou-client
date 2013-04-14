@@ -1,10 +1,14 @@
 ﻿define([
     'jquery'
 ], function ($) {
-    var htmlHelpers = function () {
-    };
-    htmlHelpers.prototype.loadCss = function (href) {
-        $('<link rel="stylesheet" type="text/css" href="' + href + '" >').appendTo("head");
-    };
-    return new htmlHelpers();
+    return new htmlHelpers($);
 });
+var htmlHelpers = (function () {
+    function htmlHelpers($) {
+        this.$ = $;
+    }
+    htmlHelpers.prototype.loadCss = function (href) {
+        this.$('<link rel="stylesheet" type="text/css" href="' + href + '" >').appendTo("head");
+    };
+    return htmlHelpers;
+})();

@@ -5,80 +5,22 @@
             Topic: http://localhost:6522/client/index.html
         </div>
 
-        <ul class="users-list">
-            <li><b class="status"></b>user 1</li>
-            <li><b class="status"></b>user 2</li>
-            <li><b class="status"></b>user 3</li>
-            <li><b class="status"></b>user 4</li>
+        <ul class="users-list" data-bind="foreach: users">
+            <li><b class="status"></b><span data-bind="text: $data"></span></li>
         </ul>
         <div class="chat-messages">
-            <ul class="inner">
+            <ul class="inner" data-bind="foreach: { data: messages, afterRender: messagesListRendered }">
                 <li>
-                    <span class="name">user 1</span>
-                    <span class="time pull-right">7:30pm</span>
-                    <p class="text">Lorem ipsum tra-ta-ta-ta</p>
-                </li>
-                <li>
-                    <span class="name">user 1</span>
-                    <span class="time pull-right">7:30pm</span>
-                    <p class="text">Lorem ipsum tra-ta-ta-ta</p>
-                </li>
-                <li>
-                    <span class="name">user 1</span>
-                    <span class="time pull-right">7:30pm</span>
-                    <p class="text">Lorem ipsum tra-ta-ta-ta</p>
-                </li>
-                <li>
-                    <span class="name">user 1</span>
-                    <span class="time pull-right">7:30pm</span>
-                    <p class="text">Lorem ipsum tra-ta-ta-ta</p>
-                </li>
-                <li>
-                    <span class="name">user 1</span>
-                    <span class="time pull-right">7:30pm</span>
-                    <p class="text">Lorem ipsum tra-ta-ta-ta</p>
-                </li>
-                <li>
-                    <span class="name">user 1</span>
-                    <span class="time pull-right">7:30pm</span>
-                    <p class="text">Lorem ipsum tra-ta-ta-ta</p>
-                </li>
-                <li>
-                    <span class="name">user 1</span>
-                    <span class="time pull-right">7:30pm</span>
-                    <p class="text">Lorem ipsum tra-ta-ta-ta</p>
-                </li>
-                <li>
-                    <span class="name">user 1</span>
-                    <span class="time pull-right">7:30pm</span>
-                    <p class="text">Lorem ipsum tra-ta-ta-ta</p>
-                </li>
-                <li>
-                    <span class="name">user 1</span>
-                    <span class="time pull-right">7:30pm</span>
-                    <p class="text">Lorem ipsum tra-ta-ta-ta</p>
-                </li>
-                <li>
-                    <span class="name">user 1</span>
-                    <span class="time pull-right">7:30pm</span>
-                    <p class="text">Lorem ipsum tra-ta-ta-ta</p>
-                </li>
-                <li>
-                    <span class="name">user 1</span>
-                    <span class="time pull-right">7:30pm</span>
-                    <p class="text">Lorem ipsum tra-ta-ta-ta</p>
-                </li>
-                <li>
-                    <span class="name">user 1</span>
-                    <span class="time pull-right">7:30pm</span>
-                    <p class="text">Lorem ipsum tra-ta-ta-ta</p>
+                    <span class="name"data-bind="text: from"></span>
+                    <span class="time pull-right" data-bind="text: new Date(when).toLocaleTimeString()"></span>
+                    <p class="text" data-bind="text: text"></p>
                 </li>
             </ul>
         </div>
     </div>
     <div class="compose-message">
         <div class="row-fluid">
-            <input class="span12" type="text">
+            <input class="span12" type="text" data-bind="value: newMessage, valueUpdate: 'afterkeydown', returnKey: sendMessage, hasfocus: true">
         </div>
     </div>
 </div>

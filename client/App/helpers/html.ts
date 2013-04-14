@@ -3,13 +3,19 @@
 
 define(['jquery'], function ($: JQueryStatic) {
 
-    var htmlHelpers = () => {
-    };
+    return new htmlHelpers($);
+});
 
-    htmlHelpers.prototype.loadCss = (href: string) => {
-        $('<link rel="stylesheet" type="text/css" href="' + href + '" >')
-            .appendTo("head");
+class htmlHelpers
+{
+    private $: JQueryStatic;
+    constructor($: JQueryStatic)
+    {
+        this.$ = $;
     }
 
-    return new htmlHelpers();
-});
+    public loadCss(href: string){
+        this.$('<link rel="stylesheet" type="text/css" href="' + href + '" >')
+            .appendTo("head");
+    }
+}
