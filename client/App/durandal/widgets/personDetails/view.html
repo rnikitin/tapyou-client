@@ -1,0 +1,21 @@
+﻿<!--
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="view.html" company="ePythia Labs">
+//   Created: 5/4/2013 15:42 - by Roman Nikitin
+//   Project: CompasPlus.Web.Site
+//   Copyright (c) 2013 ePythia Labs & ePythia Corporation
+// </copyright>
+// <summary>
+//   
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+-->
+
+<div class="tasks" style="display: none;">
+    <!-- ko widget: {kind: 'tasksTable', animate: true, items: tasks } -->
+    <!-- /ko -->
+    <div class="btn-toolbar extra">
+        <button class="btn btn-small" type="button" data-bind="enable: $root.person().AssignedCount, click: $root.sendTasksToPerson"><i class="icon-bell"></i>&nbsp; Отправить <!-- ko text: $root.person().AssignedCount --><!-- /ko --> задач</button>
+        <button class="btn btn-small" type="button" data-bind="enable: tasks().length"><i class="icon-print"></i>&nbsp;Распечатать</button>
+    </div>
+</div>

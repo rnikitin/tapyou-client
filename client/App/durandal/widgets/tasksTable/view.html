@@ -1,0 +1,35 @@
+﻿<!--
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="tasksTable.html" company="ePythia Labs">
+//   Created: 3/4/2013 2:55 - by Roman
+//   Project: CompasPlus.Web.Site
+//   Copyright (c) 2013 ePythia Labs & ePythia Corporation
+// </copyright>
+// <summary>
+//   
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+-->
+
+
+<div class="tasks-table">
+    <div class="row-fluid header">
+        <div class="span1">#</div>
+        <div class="span6">Адрес</div>
+        <div class="span2">Время</div>
+        <div class="span2">Стоимость</div>
+        <div class="span1"></div>
+    </div>
+    <!-- ko foreach: settings.items -->
+    <div class="row-fluid item" data-bind="click: _.bind($parent.selectTask, $parent)">
+        <div class="span1" data-bind="text: Number"></div>
+        <div class="span6" data-bind="text: Address"></div>
+        <div class="span2" data-bind="text: Time"></div>
+        <div class="span2" data-bind="text: Summ"></div>
+        <div class="span1 statuses">
+            <span class="valid" data-bind="visible: false"><i title="есть подзадачи" class="icon-list-ol"></i></span>
+            <span class="valid" data-bind="visible: ErrorsCount"><i title="есть ошибки" class="icon-warning-sign"></i></span>
+        </div>
+    </div>
+    <!-- /ko -->
+</div>

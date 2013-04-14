@@ -1,0 +1,106 @@
+﻿<!--
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="view.html" company="ePythia Labs">
+//   Created: 5/4/2013 15:42 - by Roman Nikitin
+//   Project: CompasPlus.Web.Site
+//   Copyright (c) 2013 ePythia Labs & ePythia Corporation
+// </copyright>
+// <summary>
+//   
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+-->
+
+<div class="task-details container-fluid" data-bind="with: model()" style="display: none">
+    <div data-bind="click: _.bind($parent.hide, $parent)" class="close">&times;</div>
+    <div class="row-fluid">
+        <div class="span4"><strong>#</strong><span data-bind="validatedText: $root.validate(Number, 'number')"></span></div>
+        <div class="span8">
+            <div class="pull-right actions">
+                <div class="btn-group" data-bind="visible: StateCode == 1">
+                    <a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-hand-right"></i>&nbsp;Назначить&nbsp;<span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" data-bind="foreach: $root.persons">
+                        <li>
+                            <a href="#" data-bind="click: _.bind($root.attachPerson, $root)"><i class="icon-user"></i>&nbsp;<span data-bind="text: NicName"></span></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="btn-group">
+                    <a href="#" class="btn btn-small" data-bind="click: _.bind($parent.editTask, $parent)"><i class="icon-pencil"></i>&nbsp;Редактировать</a>
+                    <button class="btn btn-small dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" data-bind="click: _.bind($parent.deleteTask, $parent)"><i class="icon-trash icon-white"></i>​&nbsp;Удалить</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span7"><strong>Адрес: </strong><span data-bind="validatedText: $root.validate(Address, 'gps')"></span></div>
+        <div class="span5">
+            <strong>Дата: </strong><span data-bind="validatedText: $root.validate($root.DateString(), 'date')"></span>, 
+            <span data-bind="text: TimePeriod"></span>
+        </div>
+    </div>
+    <div class="row-fluid" data-bind="visible: Station">
+        <div class="span4"><strong>Метро: </strong><span data-bind="text: Station"></span></div>
+    </div>
+    <div class="row-fluid">
+        <div class="span12">
+            <strong>Клиент: </strong><span data-bind="text: Contact"></span>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span12">
+            <!-- ko foreach: Phones -->
+            <strong data-bind="text: 'Телефон ' + ($index() + 1) + ': '"></strong><span data-bind="    text: Value"></span>,
+            <!-- /ko -->
+            <strong>e-mail: </strong><a href="" data-bind="text: Email, attr: { href: 'mailto:' + Email }"></a>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span12">
+            <strong>Примечание: </strong><span data-bind="text: Note"></span>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <table class="products-table table table-condensed" data-bind="visible: Products.length">
+            <tbody>
+                <tr class="title-row">
+                    <th colspan="6" style="text-align: center">Накладная:</th>
+                </tr>
+                <tr class="header-row">
+                    <th class="num">№</th>
+                    <th class="name">Наименование товара</th>
+                    <th class="units">Ед. изм.</th>
+                    <th class="price">Цена</th>
+                    <th class="count">Кол-во</th>
+                    <th class="summ">Сумма</th>
+                </tr>
+                <!-- ko foreach: Products -->
+                <tr>
+                    <td class="num" data-bind="text: $index() + 1"></td>
+                    <td class="name">
+                        <div data-bind="text: Name"></div>
+                    </td>
+                    <td class="units" data-bind="text: Unit"></td>
+                    <td class="price" data-bind="text: Price"></td>
+                    <td class="quantity" data-bind="text: Quantity"></td>
+                    <td class="summ" data-bind="text: Price * Quantity"></td>
+                </tr>
+                <!-- /ko -->
+                <tr class="delivery-row" data-bind="visible: DeliveryPrice">
+                    <td class="text" colspan="5">Доставка <span data-bind="visible: DeliveryReason">(<!-- ko text: DeliveryReason --><!-- /ko -->)</span></td>
+                    <td data-bind="text: DeliveryPrice"></td>
+                </tr>
+                <tr class="sum-row">
+                    <td class="text" colspan="5">Итого <span data-bind="visible: PayType">(<!-- ko text: PayType --><!-- /ko -->)</span></td>
+                    <td data-bind="text: $root.totalPrice()"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
