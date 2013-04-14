@@ -24,6 +24,13 @@ define(['durandal/app', 'durandal/viewLocator', 'durandal/system', 'jquery', 'bo
     system.debug(true);
     //>>excludeEnd("build");
 
+    // to avoid conflicts remove $ alias from window
+    window.__tap$ = $.noConflict();
+    
+    // load manually socket.io
+    $.getScript('http://localhost:31337/socket.io/socket.io.js', function () {
+    });
+
     app.start().then(function () {
         viewLocator.useConvention();
         app.adaptToDevice();

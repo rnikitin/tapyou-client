@@ -1,4 +1,4 @@
-﻿define(['./system'], function (system) {
+﻿define(['./system', 'jquery', 'ko'], function (system, $, ko) {
     var parseMarkupCore;
 
     if ($.parseHTML) {

@@ -1,4 +1,4 @@
-﻿define(['./system'], function (system) {
+﻿define(['./system', 'ko'], function (system, ko) {
     var viewModelBinder;
     var insufficientInfoMessage = 'Insufficient Information to Bind';
     var unexpectedViewMessage = 'Unexpected View Type';
