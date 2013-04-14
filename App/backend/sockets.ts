@@ -34,7 +34,7 @@ class sockets {
         // todo: hide IO from global scope
 
         // connect
-        var socket = io.connect("http://localhost:31337");
+        var socket = io.connect("http://tapyou-server.azurewebsites.net");
         me.socket = socket;
 
         // send name and join the room

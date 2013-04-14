@@ -1,4 +1,4 @@
-function test_creatingVMs() {
+﻿function test_creatingVMs() {
     var myViewModel = {
         personName: ko.observable('Bob'),
         personAge: ko.observable(123)

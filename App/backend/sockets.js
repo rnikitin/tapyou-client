@@ -15,7 +15,7 @@ var sockets = (function () {
         var p = this.$.Deferred();
         this.app.trigger('socket:init');
         var me = this;
-        var socket = io.connect("http://localhost:31337");
+        var socket = io.connect("http://tapyou-server.azurewebsites.net");
         me.socket = socket;
         socket.emit("join", {
             name: name,
@@ -29,7 +29,7 @@ var sockets = (function () {
         this.socket.emit('message:sent', message);
     };
     sockets.prototype.getUsersInRoom = function () {
-        this.socket.emit('get:users');
+        this.socket.emit('get:users', this.channel);
     };
     sockets.prototype.events = function () {
         var me = this;

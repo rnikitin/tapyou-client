@@ -3,7 +3,7 @@
     'helpers/html'
 ], function (require, html) {
     function shell() {
-        html.loadCss('/client/Content/app.css');
+        html.loadCss('/Content/app.css');
     }
     shell.prototype.viewAttached = function (view) {
     };
