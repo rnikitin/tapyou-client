@@ -36,9 +36,9 @@ var panel = (function () {
         this.messages = ko.observableArray([]);
         this.newMessage = ko.observable('');
         sockets.getUsersInRoom();
-        setInterval(function () {
+        setTimeout(function () {
             sockets.getUsersInRoom();
-        }, 2000);
+        }, 3000);
         app.on('result:users', function (users) {
             _this.users(users);
         }, this);

@@ -56,10 +56,10 @@ class panel {
 
         //// due to azure issue request users again in a 1-2 seconds
         //// temporary crap
-        setInterval(() =>
+        setTimeout(() =>
         {
             sockets.getUsersInRoom();
-        }, 2000);
+        }, 3000);
 
         // returned from server list of users in current room
         app.on('result:users', (users: string[]) =>
