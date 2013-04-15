@@ -15,7 +15,7 @@ var sockets = (function () {
         this.channel = room;
         var p = this.$.Deferred();
         this.app.trigger('socket:init');
-        var socket = io.connect("http://localhost:31337");
+        var socket = io.connect("http://tapyou-server.azurewebsites.net");
         me.socket = socket;
         socket.on('connected', function () {
             console.log('connected');

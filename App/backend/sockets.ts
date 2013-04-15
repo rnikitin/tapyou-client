@@ -30,9 +30,9 @@ class sockets {
         // todo: hide IO from global scope
 
         // connect
-        //var socket = io.connect("http://tapyou-server.azurewebsites.net");
+        var socket = io.connect("http://tapyou-server.azurewebsites.net");
+        //var socket = io.connect("http://localhost:31337");
 
-        var socket = io.connect("http://localhost:31337");
         me.socket = socket;
 
         // handle server-side events
