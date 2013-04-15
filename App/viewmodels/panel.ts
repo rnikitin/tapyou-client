@@ -51,22 +51,6 @@ class panel {
         this.messages = ko.observableArray([]);
         this.newMessage = ko.observable('');
 
-        // request users in room
-        sockets.getUsersInRoom();
-
-        //// due to azure issue request users again in a 1-2 seconds
-        //// temporary crap
-        setTimeout(() =>
-        {
-            sockets.getUsersInRoom();
-        }, 3000);
-
-        // returned from server list of users in current room
-        app.on('result:users', (users: string[]) =>
-        {
-            this.users(users);
-        }, this);
-
         // new user connected to room
         app.on('user:connected', (name: string) =>
         {
@@ -82,9 +66,25 @@ class panel {
         {
             this.messages.push(message);
         }, this);
+
+        // connect to socket
+        var room = window.location.href.hashCode();
+        var name = createRandomWord(6);
+
+        this.sockets.init(room, name).done(() =>
+        {
+            // ask for users
+            me.sockets.getUsersInRoom((users: string[]) =>
+            {
+                console.log('callback', users);
+                me.users(users);
+            });
+        });
+
     }
 
     public viewAttached(view) {
+        var me = this;
         this.$view = this.$(view);
     };
 
@@ -98,7 +98,7 @@ class panel {
     };
 
     public messagesListRendered() {
-        
+
     }
 
     public sendMessage() {
@@ -124,4 +124,28 @@ class panel {
             me.app.trigger("panel:opened");
         });
     }
+}
+
+String.prototype.hashCode = function () {
+    for (var ret = 0, i = 0, len = this.length; i < len; i++) {
+        ret = (31 * ret + this.charCodeAt(i)) << 0;
+    }
+    return ret;
+}
+
+function random(max) {
+    return Math.floor((Math.random() * max) + 1);
+}
+
+function createRandomWord(length) {
+    var i, word = '', length = parseInt(length, 10),
+        consonants = 'bcdfghjklmnpqrstvwxyz'.split(''),
+        vowels = 'aeiou'.split('');
+    for (i = 0; i < length / 2; i++) {
+        var randConsonant = consonants[random(consonants.length - 1)],
+            randVowel = vowels[random(vowels.length - 1)];
+        word += (i === 0) ? randConsonant.toUpperCase() : randConsonant;
+        word += i * 2 < length - 1 ? randVowel : '';
+    }
+    return word;
 }

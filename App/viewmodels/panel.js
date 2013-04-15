@@ -1,4 +1,4 @@
-﻿define([
+define([
     "require", 
     'durandal/app', 
     'jquery', 
@@ -35,13 +35,6 @@ var panel = (function () {
         this.users = ko.observableArray([]);
         this.messages = ko.observableArray([]);
         this.newMessage = ko.observable('');
-        sockets.getUsersInRoom();
-        setTimeout(function () {
-            sockets.getUsersInRoom();
-        }, 3000);
-        app.on('result:users', function (users) {
-            _this.users(users);
-        }, this);
         app.on('user:connected', function (name) {
             _this.users.push(name);
         }, this);
@@ -51,8 +44,17 @@ var panel = (function () {
         app.on('message:new', function (message) {
             _this.messages.push(message);
         }, this);
+        var room = window.location.href.hashCode();
+        var name = createRandomWord(6);
+        this.sockets.init(room, name).done(function () {
+            me.sockets.getUsersInRoom(function (users) {
+                console.log('callback', users);
+                me.users(users);
+            });
+        });
     }
     panel.prototype.viewAttached = function (view) {
+        var me = this;
         this.$view = this.$(view);
     };
     panel.prototype.expanderClicked = function () {
@@ -93,3 +95,21 @@ var panel = (function () {
     };
     return panel;
 })();
+String.prototype.hashCode = function () {
+    for(var ret = 0, i = 0, len = this.length; i < len; i++) {
+        ret = (31 * ret + this.charCodeAt(i)) << 0;
+    }
+    return ret;
+};
+function random(max) {
+    return Math.floor((Math.random() * max) + 1);
+}
+function createRandomWord(length) {
+    var i, word = '', length = parseInt(length, 10), consonants = 'bcdfghjklmnpqrstvwxyz'.split(''), vowels = 'aeiou'.split('');
+    for(i = 0; i < length / 2; i++) {
+        var randConsonant = consonants[random(consonants.length - 1)], randVowel = vowels[random(vowels.length - 1)];
+        word += (i === 0) ? randConsonant.toUpperCase() : randConsonant;
+        word += i * 2 < length - 1 ? randVowel : '';
+    }
+    return word;
+}

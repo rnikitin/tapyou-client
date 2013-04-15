@@ -10,26 +10,29 @@ var sockets = (function () {
         this.app = app;
     }
     sockets.prototype.init = function (room, name) {
+        var me = this;
         this.username = name;
         this.channel = room;
         var p = this.$.Deferred();
         this.app.trigger('socket:init');
-        var me = this;
-        var socket = io.connect("http://tapyou-server.azurewebsites.net");
+        var socket = io.connect("http://localhost:31337");
         me.socket = socket;
-        socket.emit("join", {
-            name: name,
-            room: room
+        socket.on('connected', function () {
+            console.log('connected');
+            socket.emit("join", {
+                name: me.username,
+                room: me.channel
+            });
+            me.events();
+            p.resolve();
         });
-        p.resolve();
-        me.events();
         return p.promise();
     };
     sockets.prototype.sendMessage = function (message) {
         this.socket.emit('message:sent', message);
     };
-    sockets.prototype.getUsersInRoom = function () {
-        this.socket.emit('get:users', this.channel);
+    sockets.prototype.getUsersInRoom = function (callback) {
+        this.socket.emit('get:users', this.channel, callback);
     };
     sockets.prototype.events = function () {
         var me = this;
@@ -42,9 +45,6 @@ var sockets = (function () {
         });
         socket.on('user:disconnected', function (name) {
             me.app.trigger('user:disconnected', name);
-        });
-        socket.on('result:users', function (users) {
-            me.app.trigger('result:users', users);
         });
     };
     return sockets;

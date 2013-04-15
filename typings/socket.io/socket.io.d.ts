@@ -21,10 +21,10 @@ interface Socket {
     broadcast: any;
     in(room: string): Socket;
     to(room: string): Socket;
-    join(name: string, fn: Function): Socket;
+    join(name: string, fn?: Function): Socket;
     unjoin(name: string, fn: Function): Socket;
-    set (key: string, value: any, fn: Function): Socket;
-    get (key: string, value: any, fn: Function): Socket;
+    set (key: string, value: any, fn?: Function): Socket;
+    get (key: string, fn: Function): Socket;
     has(key: string, fn: Function): Socket;
     del(key: string, fn: Function): Socket;
     disconnect(): Socket;

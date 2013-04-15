@@ -15,35 +15,36 @@ class sockets {
     private socket: Socket;
     public username;
     public channel;
-
+    
     constructor($: JQueryStatic, app) {
         this.$ = $;
         this.app = app;
     }
 
     public init(room: string, name: string): JQueryPromise {
+        var me = this;
         this.username = name;
         this.channel = room;
-
         var p = this.$.Deferred();
-
         this.app.trigger('socket:init');
-
-        var me = this;
-
         // todo: hide IO from global scope
 
         // connect
-        var socket = io.connect("http://tapyou-server.azurewebsites.net");
+        //var socket = io.connect("http://tapyou-server.azurewebsites.net");
+
+        var socket = io.connect("http://localhost:31337");
         me.socket = socket;
 
-        // send name and join the room
-        socket.emit("join", { name: name, room: room });
-
-        // resolve promise
-        p.resolve();
-
-        me.events();
+        // handle server-side events
+        socket.on('connected', () =>
+        {
+            console.log('connected');
+            // send name and join the room
+            socket.emit("join", { name: me.username, room: me.channel });
+            me.events();
+            // resolve promise
+            p.resolve();
+        });
 
         return p.promise();
     }
@@ -52,17 +53,16 @@ class sockets {
         this.socket.emit('message:sent', message);
     }
 
-    public getUsersInRoom() {
-        this.socket.emit('get:users', this.channel);
+    public getUsersInRoom(callback) {
+        this.socket.emit('get:users', this.channel, callback);
     }
-
 
     ////////////////////////////// private
     private events() {
         var me = this;
         var socket = this.socket;
 
-        // handle server-side events
+        
         socket.on('message:new', (message: ISocketMessage) =>
         {
             me.app.trigger('message:new', message);
@@ -76,11 +76,6 @@ class sockets {
         socket.on('user:disconnected', (name: string) =>
         {
             me.app.trigger('user:disconnected', name);
-        });
-
-        socket.on('result:users', (users: string[]) =>
-        {
-            me.app.trigger('result:users', users);
         });
     }
 }

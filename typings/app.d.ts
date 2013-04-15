@@ -16,5 +16,5 @@ interface ISocketClient {
 
     init(room: string, name: string): JQueryPromise;
     sendMessage(message: ISocketMessage);
-    getUsersInRoom();
+    getUsersInRoom(callback: Function);
 }
