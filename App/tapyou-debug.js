@@ -15284,7 +15284,7 @@ var sockets = (function () {
         var p = this.$.Deferred();
         this.app.trigger('socket:init');
         var me = this;
-        var socket = io.connect("http://localhost:31337");
+        var socket = io.connect("http://tapyou-server.azurewebsites.net");
         me.socket = socket;
         socket.emit("join", {
             name: name,
@@ -15298,7 +15298,7 @@ var sockets = (function () {
         this.socket.emit('message:sent', message);
     };
     sockets.prototype.getUsersInRoom = function () {
-        this.socket.emit('get:users');
+        this.socket.emit('get:users', this.channel);
     };
     sockets.prototype.events = function () {
         var me = this;
@@ -17355,7 +17355,7 @@ define('text',['module'], function (module) {
 });
 
 requirejs.config({
-    urlArgs: "bust=" + (new Date()).getTime(),
+    //urlArgs: "bust=" + (new Date()).getTime(),
 
     paths: {
         "text": "durandal/amd/text",
@@ -17453,7 +17453,7 @@ define('viewmodels/shell',[
     'helpers/html'
 ], function (require, html) {
     function shell() {
-        html.loadCss('/client/Content/app.css');
+        html.loadCss('/Content/app.css');
     }
     shell.prototype.viewAttached = function (view) {
     };
@@ -17498,6 +17498,9 @@ var panel = (function () {
         this.messages = ko.observableArray([]);
         this.newMessage = ko.observable('');
         sockets.getUsersInRoom();
+        setTimeout(function () {
+            sockets.getUsersInRoom();
+        }, 3000);
         app.on('result:users', function (users) {
             _this.users(users);
         }, this);
@@ -17555,7 +17558,7 @@ var panel = (function () {
 
 define('text!views/shell.html',[],function () { return '<div>\r\n    <!-- ko compose: \'viewmodels/panel\' -->\r\n    <!-- /ko -->\r\n</div>';});
 
-define('text!views/panel.html',[],function () { return '<div class="tapyou-host on">\r\n    <div data-bind="click: expanderClicked" class="expander">TapYou</div>\r\n    <div class="chat-host">\r\n        <div class="row-fluid chat-header">\r\n            Topic: http://localhost:6522/client/index.html\r\n        </div>\r\n\r\n        <ul class="users-list" data-bind="foreach: users">\r\n            <li><b class="status"></b><span data-bind="text: $data"></span></li>\r\n        </ul>\r\n        <div class="chat-messages">\r\n            <ul class="inner" data-bind="foreach: { data: messages, afterRender: messagesListRendered }">\r\n                <li>\r\n                    <span class="name"data-bind="text: from"></span>\r\n                    <span class="time pull-right" data-bind="text: new Date(when).toLocaleTimeString()"></span>\r\n                    <p class="text" data-bind="text: text"></p>\r\n                </li>\r\n            </ul>\r\n        </div>\r\n    </div>\r\n    <div class="compose-message">\r\n        <div class="row-fluid">\r\n            <input class="span12" type="text" data-bind="value: newMessage, valueUpdate: \'afterkeydown\', returnKey: sendMessage, hasfocus: true">\r\n        </div>\r\n    </div>\r\n</div>\r\n';});
+define('text!views/panel.html',[],function () { return '<div class="tapyou-host">\r\n    <div data-bind="click: expanderClicked" class="expander">TapYou</div>\r\n    <div class="chat-host">\r\n        <div class="row-fluid chat-header">\r\n            Topic: http://localhost:6522/client/index.html\r\n        </div>\r\n\r\n        <ul class="users-list" data-bind="foreach: users">\r\n            <li><b class="status"></b><span data-bind="text: $data"></span></li>\r\n        </ul>\r\n        <div class="chat-messages">\r\n            <ul class="inner" data-bind="foreach: { data: messages, afterRender: messagesListRendered }">\r\n                <li>\r\n                    <span class="name"data-bind="text: from"></span>\r\n                    <span class="time pull-right" data-bind="text: new Date(when).toLocaleTimeString()"></span>\r\n                    <p class="text" data-bind="text: text"></p>\r\n                </li>\r\n            </ul>\r\n        </div>\r\n    </div>\r\n    <div class="compose-message">\r\n        <div class="row-fluid">\r\n            <input class="span12" type="text" data-bind="value: newMessage, valueUpdate: \'afterkeydown\', returnKey: sendMessage, hasfocus: true">\r\n        </div>\r\n    </div>\r\n</div>\r\n';});
 
 require(["main"]);
 }());
